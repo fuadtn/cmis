@@ -61,8 +61,8 @@ int main(int argc, char *argv[])
 {
 	int inverse, r_length, length;
 	unsigned char output[1024];
-	 int c_input[1024];
-	 int c_output[1024];
+	int c_input[1024];
+	int c_output[1024];
 	char input[1024];
 	char key[256];
 
