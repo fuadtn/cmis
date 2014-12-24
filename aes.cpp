@@ -96,8 +96,6 @@ int main(int argc, char *argv[])
 	f_read.getline(key, 1024);
 	f_read.close();
 
-	// если длина вводимого сообщени€ не кратна 16,
-	// то добавим в его конец единицу и добьем всЄ нул€ми
 	length = r_length = strlen(input);
 	if (length % 16 != 0)
 	{
@@ -113,12 +111,10 @@ int main(int argc, char *argv[])
 		c_input[i] = 256 + input[i];
 	}
 
-	// занесли в таблицу раундовых ключей первый блок
 	for (int i = 0; i < Nb; i++)
 	for (int j = 0; j < Nb; j++)
 	word[i][j] = (int) key[i + 4 * j];
 
-	// сформировали всю таблицу раундовых ключей (1 + Nr)
 	key_expansion();
 
 	for (int k = 0; k < length / 16; k++)
@@ -142,7 +138,6 @@ int main(int argc, char *argv[])
 		c_input[i] = 256 + input[i];
 	}
 
-	// вывод__________________________
 	f_write.open(argv[4], ios_base::binary);
 	for (int i = 0; i < length; i++)
 	f_write << output[i];
@@ -152,8 +147,6 @@ int main(int argc, char *argv[])
 
 int sub_bytes(int inverse)
 {
-	// -e: функци€, замен€юща€ каждый байт состо€ни€ соответствующим из sbox[256]
-	// -d: замена на байты из inv_sbox[256]
 	int index;
 	if (inverse == 0)
 	{
@@ -178,7 +171,6 @@ int sub_bytes(int inverse)
 
 int shift_rows(int inverse)
 {
-	// функци€, совершающа€ циклический сдвиг влево (-e) или вправо (-d)
 	int tmp;
 	int index = Nb;
 	if (inverse == 0)
@@ -214,8 +206,6 @@ int shift_rows(int inverse)
 
 int mix_columns(int inverse)
 {
-	// функци€, совершающа€ умножение столбца матрицы состо€ни€ на строку одной
-	// из двух константных матриц в зависимости от введеного аргумента (-e или -d)
 	int s0, s1, s2, s3;
 	for (int i = 0; i < Nb; i++)
 	{
@@ -244,7 +234,6 @@ int mix_columns(int inverse)
 
 int key_expansion()
 {
-	// функци€, формирующа€ таблицу раундовых ключей
 	for (int i = Nb; i < Nb*(Nr + 1); i++)
 	{
 		for (int j = 0; j < Nb; j++)
@@ -267,7 +256,6 @@ int key_expansion()
 
 int shift_word(int index)
 {
-	// функци€, совершающа€ циклический сдвиг влево столбца таблицы ключей
 	int tmp = word[0][index];
 	for (int i = 0; i < Nb - 1; i++)
 		word[i][index] = word[i + 1][index];
@@ -277,7 +265,6 @@ int shift_word(int index)
 
 int sub_word(int index)
 {
-	// функци€, замен€юща€ каждый байт таблицы ключей соответствующим из sbox[256]
 	int count;
 	for (int i = 0; i < Nb; i++)
 	{
@@ -289,7 +276,6 @@ int sub_word(int index)
 
 int add_rkey(int inverse, int number)
 {
-	// функци€, совершающа€ поэлементный XOR матрицы состо€ни€ и number-ого блока ключей
 	for (int i = 0; i < Nb; i++)
 	for (int j = 0; j < Nb; j++)
 	{
