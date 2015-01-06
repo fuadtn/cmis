@@ -10,4 +10,5 @@ stg:
 clean:
 	rm vigeneer
 	rm aes
+	rm stg
 	
