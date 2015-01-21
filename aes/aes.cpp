@@ -94,7 +94,17 @@ int main(int argc, char *argv[])
 	}
 
 	i_file = fopen(argv[2], "rb");
+	if (i_file == NULL)
+	{
+		cout << "error: can't open input file" << endl;
+		return 0;
+	}
 	k_file = fopen(argv[3], "rb");
+	if (k_file == NULL)
+	{
+		cout << "error: can't open key file" << endl;
+		return 0;
+	}
 	
 	fseek(i_file, 0, SEEK_END);
 	i_length = ftell(i_file);
