@@ -6,6 +6,7 @@ using namespace std;
 
 FILE *i_file;
 FILE *k_file;
+FILE *o_file;
 
 int i_length;
 int k_length;
@@ -24,7 +25,7 @@ int main(int argc, char *argv[])
 	if (strcmp(argv[1], "--help") == 0)
 	{
 		cout << endl;
-		cout << "./vigeneer [encryption key] [input file] [key file]" << endl;
+		cout << "./vigeneer [encryption key] [input file] [key file] [out file]" << endl;
 		cout << endl;		
 		cout << " encryption key:" << endl;
 		cout << "-e\t\tencryption;" << endl;
@@ -32,14 +33,24 @@ int main(int argc, char *argv[])
 		cout << endl;
 		return 0;
 	}
-	if(argc < 4)
+	if(argc < 5)
 	{
 		cout << "error: too few arguments" << endl;
 		return -1;
 	}
 	
 	i_file = fopen(argv[2], "rb");
+	if (i_file == NULL)
+	{
+		cout << "error: can't open input file" << endl;
+		return 0;
+	}
 	k_file = fopen(argv[3], "rb");
+	if (k_file == NULL)
+	{
+		cout << "error: can't open key file" << endl;
+		return 0;
+	}
 	
 	fseek(i_file, 0, SEEK_END);
 	i_length = ftell(i_file);
@@ -75,7 +86,13 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 	
-	i_file = fopen(argv[2], "wb");
+	o_file = fopen(argv[4], "wb");
+	if (o_file == NULL)
+	{
+		cout << "error: can't write in / create file" << endl;
+		return 0;
+	}
+
 	for (int i = 0; i < i_length; i++)
 	fwrite(&i_message[i], sizeof(char), 1, i_file);
 	fclose(i_file);
