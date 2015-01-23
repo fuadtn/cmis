@@ -2,6 +2,11 @@
 #include <stdio.h>
 #include <iostream>
 
+FILE *p_file;
+FILE *i_file;	
+	
+char *i_message;
+
 struct BITMAPFILEHEADER
 {
 	unsigned int    Type;
@@ -41,17 +46,13 @@ unsigned int read_u32(FILE *fp);
 int read_s32(FILE *fp);
 
 int main(int argc, char *argv[])
-{
-	FILE *p_file;
-	FILE *i_file;	
-	
-	char *i_message;
-	
+{	
 	unsigned short usi_length;
 	int z_count = -1;
 	char m_symbol;
 	char h_buffer[1078];
-
+	
+	if (argc == 2)
 	if (strcmp(argv[1], "--help") == 0)
 	{
 		cout << "./stg [encryption key] [picture file] [input file]" << endl << endl;
