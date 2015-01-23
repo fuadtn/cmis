@@ -22,6 +22,7 @@ void v_decryption(char i_message[], char k_message[]);
 
 int main(int argc, char *argv[])
 {
+	if (argc == 2)
 	if (strcmp(argv[1], "--help") == 0)
 	{
 		cout << endl;
@@ -33,6 +34,7 @@ int main(int argc, char *argv[])
 		cout << endl;
 		return 0;
 	}
+
 	if(argc < 5)
 	{
 		cout << "error: too few arguments" << endl;
