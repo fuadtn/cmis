@@ -74,6 +74,13 @@ int main(int argc, char *argv[])
 	fclose(i_file);
 	fclose(k_file);
 	
+	for (int i = 0; i < k_length; i++)
+	if (k_message[i] < 97 || k_message[i] > 122)
+	{
+		cout << "error: wrong symbol in key file" << endl;
+		return -1;
+	}
+	
 	if (strcmp(argv[1], "-d") == 0)
 	{
 		v_decryption(i_message, k_message);
@@ -131,7 +138,10 @@ void v_encryption(char i_message[], char k_message[])
     CopyString(k_message, i_length);
 
     for(int i = 0; i < i_length; i++)
-    i_message[i] = (GetIndex(i_message[i]) + GetIndex(k_message[i])) % 26 + 97;
+    {
+    	if (GetIndex(i_message[i]) != -1)
+    	i_message[i] = (GetIndex(i_message[i]) + GetIndex(k_message[i])) % 26 + 97;
+	}
 }
 
 void v_decryption(char i_message[], char k_message[])
@@ -139,5 +149,8 @@ void v_decryption(char i_message[], char k_message[])
     CopyString(k_message, i_length);
 
     for(int i = 0; i < i_length; i++)
-    i_message[i] = (GetIndex(i_message[i]) - GetIndex(k_message[i]) + 26) % 26 + 97;
+    {
+    	if (GetIndex(i_message[i]) != -1)
+    	i_message[i] = (GetIndex(i_message[i]) - GetIndex(k_message[i]) + 26) % 26 + 97;
+	}
 }
